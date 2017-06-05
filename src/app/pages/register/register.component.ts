@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {EmailValidator, EqualPasswordsValidator} from '../../theme/validators';
+import {Router} from '@angular/router';
+import {AuthService} from "../../../shared/services/auth.service";
 
 @Component({
   selector: 'register',
@@ -18,7 +20,9 @@ export class Register {
 
   public submitted:boolean = false;
 
-  constructor(fb:FormBuilder) {
+  constructor(fb:FormBuilder, 
+          private router:Router,
+          private auth:AuthService) {
 
     this.form = fb.group({
       'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
@@ -36,11 +40,23 @@ export class Register {
     this.repeatPassword = this.passwords.controls['repeatPassword'];
   }
 
-  public onSubmit(values:Object):void {
+  public onSubmit(values:any):void {
     this.submitted = true;
     if (this.form.valid) {
       // your code goes here
       // console.log(values);
+      this.auth.signup({email:values.email, password:values.passwords.password})
+      .subscribe(res =>{ 
+          console.log(res); 
+          if(res.status === 200){
+              this.router.navigate(['pages/login'])
+            }
+          }, err => {
+            //do something with error
+            this.error = true;
+            this.errorMessage = err.json().message;
+       })
+      
     }
   }
 }

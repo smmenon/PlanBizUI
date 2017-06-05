@@ -21,5 +21,11 @@
         "name": "tslint-language-service"
       }
     ]
-  }
+  },
+	"files": ["src/app/app.module.ts","src/main.ts","src/typings.d.ts"],
+  "angularCompilerOptions": {
+	"genDir": "aot",
+	"skipMetadataEmit": false
+  },
+	"exclude": ["node_modules"]
 }

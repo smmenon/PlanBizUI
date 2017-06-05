@@ -17,6 +17,8 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
+import {AuthService} from "../shared/services/auth.service";
+import {SelfbitsAngularModule, SelfbitsAngular} from "selfbits-angular2-sdk";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -30,13 +32,25 @@ export type StoreType = {
   disposeOldHosts: () => void
 };
 
+  export interface AppConfig {
+    BASE_URL:string,
+    APP_ID:string,
+    APP_SECRET:string
+  };
+
+  export const APPCONFIG:AppConfig = {
+      BASE_URL: 'https://pb1-api.selfbits.io',
+      APP_ID: 'd359a886ef82863e46894ed954e1a4a0',
+      APP_SECRET: '8b6fb836c769980deb300a6e48080ede',
+  };
+
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
   bootstrap: [App],
   declarations: [
-    App
+    App 
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -50,12 +64,16 @@ export type StoreType = {
     routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AuthService,
+    SelfbitsAngularModule,
+    SelfbitsAngular,
+    {provide:'APP_CONFIG_TOKEN', useValue:APPCONFIG}
   ]
 })
 
 export class AppModule {
-
   constructor(public appState: AppState) {
+      SelfbitsAngularModule.initializeApp(APPCONFIG); 
   }
 }
