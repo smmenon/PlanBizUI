@@ -62,6 +62,8 @@
     "calendar": "Calendar",
     "new_visits": "New Visits",
     "purchases": "Purchases",
+    "sales": "Sales",
+    "overdue": "Overdue",
     "active_users": "Active Users",
     "returned": "Returned",
     "popular_app": {

@@ -10,6 +10,7 @@ import {SelfbitsAngular} from "selfbits-angular2-sdk";
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
+
 export class Login {
 
   public form:FormGroup;
@@ -22,8 +23,8 @@ export class Login {
 
   constructor(fb:FormBuilder, 
           private auth:AuthService, 
-          private router:Router,
-          private sb:SelfbitsAngular) {
+          private router:Router  //,private sb:SelfbitsAngular
+          ) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -51,11 +52,11 @@ export class Login {
     }
   }
   
-  public social(provider:string){
+  /*public social(provider:string){
       this.sb.auth.social(provider).subscribe(res => {
         if(res.status === 200){
           this.router.navigate(['pages']);
         }
       })
-    }
+    }*/
 }

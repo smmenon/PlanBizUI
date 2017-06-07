@@ -49,7 +49,7 @@ export class Register {
       .subscribe(res =>{ 
           console.log(res); 
           if(res.status === 200){
-              this.router.navigate(['pages/login'])
+              this.router.navigate(['login'])
             }
           }, err => {
             //do something with error
